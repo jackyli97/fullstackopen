@@ -1,0 +1,32 @@
+title New Note
+
+Browser->Server: POST request to https://studies.cs.helsinki.fi/exampleapp/new_note
+Browser->Server: GET request to https://studies.cs.helsinki.fi/exampleapp/notes
+Server->Browser: HTML structure and content
+Browser->Server: GET request to Request URL: https://studies.cs.helsinki.fi/exampleapp/main.css
+Server->Browser: main.css
+Browser->Server: GET request to Request URL: Request URL: https://studies.cs.helsinki.fi/exampleapp/main.js
+Server->Browser: main.js
+note over Browser: Browser starts executing js code that requests json data from server
+Browser->Server: GET request to Request URL: Request URL: Request URL: https://studies.cs.helsinki.fi/exampleapp/data.json
+Server->Browser: [{"content":"Sample 1","date":"2020-12-05T22:35:35.101Z"}...]
+note over Browser: Browser executes the event handler code that renders updated notes
+
+title Single Page App
+
+Browser->Server: GET request to https://studies.cs.helsinki.fi/exampleapp/spa
+Server->Browser: HTML structure and content
+Browser->Server: GET request to Request URL: https://studies.cs.helsinki.fi/exampleapp/main.css
+Server->Browser: main.css
+Browser->Server: GET request to Request URL: Request URL: https://studies.cs.helsinki.fi/exampleapp/spa.js
+Server->Browser: spa.js
+note over Browser: Browser starts executing js code that requests json data from server
+Browser->Server: GET request to Request URL: Request URL: Request URL: https://studies.cs.helsinki.fi/exampleapp/data.json
+Server->Browser: [{"content":"Sample 1","date":"2020-12-05T22:35:35.101Z"}...]
+note over Browser: Browser executes the event handler code that renders updated notes
+
+title New Note: Single Page App
+
+Browser->Server: POST request to https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over Browser: Browser executes the event handler code that creates a new note, rerenders the note list and sends the new note to the server
+Server->Browser: {"message":"note created"}
