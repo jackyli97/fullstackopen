@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Search from './Search';
 import PersonForm from './PersonForm';
 import Persons from './Persons';
+import PersonInfo from "./PersonInfo";
 
 
 const App = () => {
@@ -31,6 +32,8 @@ const App = () => {
     else{
       const newPerson = [{name: newName, number: newNumber, id: persons.length+1}];
       setPersons(persons.concat(newPerson));
+      setNewName('');
+      setNewNumber('');
     }
   }
 
@@ -42,7 +45,8 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Search handleChange={handleChange} newSearch={newSearch}/>
-      <form onSubmit={handleNewPerson}>
+      <PersonForm handleChange={handleChange} handleNewPerson={handleNewPerson} newName={newName} newNumber={newNumber}/>
+      {/* <form onSubmit={handleNewPerson}>
         <div>
           name: <input onChange={handleChange("name")} value={newName} />
         </div>
@@ -53,9 +57,10 @@ const App = () => {
         <div>
           <button type="submit">add</button>
         </div>
-      </form>
+      </form> */}
       <h2>Numbers</h2>
-      {numbersToShow.map((person) => {
+      <PersonInfo numbersToShow={numbersToShow}/>
+      {/* {numbersToShow.map((person) => {
         return (
           <>
             <li>
@@ -63,7 +68,7 @@ const App = () => {
             </li>
           </>
         );
-      })}
+      })} */}
       {/* <h2>Phonebook</h2>
       <div>
         filter shown with <input onChange={handleChange("search")} value={newSearch} />
