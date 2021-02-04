@@ -8,9 +8,9 @@ const CountryInfo = ({ country }) => {
     <p>population: {country.population}</p>
 
     <h3>languages</h3>
-    {country.languages.map(language=>{
+    {country.languages.map((language,i)=>{
         return(
-            <li>{language.name}</li>
+          <li key={i}>{language.name}</li>
         )
     })}
 

@@ -19,12 +19,17 @@ const App = () => {
         setQuery(event.target.value);
     }
 
+    const handleShow = (callingCodes) => {
+        document.getElementById(callingCodes).style.display =  
+        document.getElementById(callingCodes).style.display === "none" ? "flex" : "none"; 
+    }
+
     const countriesToShow = query.length === 0 ? [] : countries.filter(country=>country.name.toLowerCase().includes(query));
   
     return(
         <div>
             <FindCountries handleQuery={handleQuery} query={query}/>
-            <CountriesDisplay countriesToShow={countriesToShow}/>
+            <CountriesDisplay countriesToShow={countriesToShow} handleShow={handleShow}/>
         </div>
     )
 }
