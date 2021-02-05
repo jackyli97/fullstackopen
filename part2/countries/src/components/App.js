@@ -19,7 +19,9 @@ const App = () => {
     },[]);
 
     const handleQuery = (event) => {
-        setQuery(event.target.value);
+      setQuery(event.target.value);
+
+      revealRefs.current = [];
     }
 
     const handleShow = (i) => {
