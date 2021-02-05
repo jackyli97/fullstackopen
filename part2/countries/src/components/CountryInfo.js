@@ -1,7 +1,7 @@
 import React from "react";
 
 const CountryInfo = ({ country }) => {
-  return <div>
+  return <>
     <h1>{country.name}</h1>
 
     <p>capital: {country.capital}</p>
@@ -15,7 +15,7 @@ const CountryInfo = ({ country }) => {
     })}
 
     <img src={country.flag} style={{marginTop: "15px",width: "10%", height: "10%"}}></img>
-  </div>;
+  </>;
 };
 
 export default CountryInfo;

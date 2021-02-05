@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import axios from "axios";
 import FindCountries from "./FindCountries";
 import CountriesDisplay from "./CountriesDisplay";
@@ -7,6 +7,9 @@ import CountriesDisplay from "./CountriesDisplay";
 const App = () => {
     const [query, setQuery] = useState("");
     const [countries, setCountries] = useState([]);
+
+     const revealRefs = useRef([]);
+     revealRefs.current = [];
 
     useEffect(()=>{
         axios.get("https://restcountries.eu/rest/v2/all")
@@ -19,19 +22,31 @@ const App = () => {
         setQuery(event.target.value);
     }
 
-    const handleShow = (callingCodes) => {
-        document.getElementById(callingCodes).style.display =  
-        document.getElementById(callingCodes).style.display === "none" ? "flex" : "none"; 
+    const handleShow = (i) => {
+        revealRefs.current[i].style.display =
+        revealRefs.current[i].style.display === "none" ? "block" : "none"; 
+    }
+
+    const addToRefs = (el) => {
+        if (el && !revealRefs.current.includes(el)){
+            revealRefs.current.push(el);
+        }
+        // console.log(revealRefs.current)
     }
 
     const countriesToShow = query.length === 0 ? [] : countries.filter(country=>country.name.toLowerCase().includes(query));
-  
-    return(
-        <div>
-            <FindCountries handleQuery={handleQuery} query={query}/>
-            <CountriesDisplay countriesToShow={countriesToShow} handleShow={handleShow}/>
-        </div>
-    )
+
+
+    return (
+      <div>
+        <FindCountries handleQuery={handleQuery} query={query} />
+        <CountriesDisplay
+          addToRefs={addToRefs}
+          countriesToShow={countriesToShow}
+          handleShow={handleShow}
+        />
+      </div>
+    );
 }
 
 export default App;

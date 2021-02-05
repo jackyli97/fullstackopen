@@ -3,13 +3,14 @@ import CountriesList from "./CountriesList";
 import CountryInfo from "./CountryInfo";
 
 
-const CountriesDisplay = ({ countriesToShow, handleShow }) => {
+const CountriesDisplay = ({ countriesToShow, handleShow, addToRefs }) => {
   return (
     <div>
       {countriesToShow.length > 10 ? (
         "Too much matches, specify another filter"
       ) : countriesToShow.length > 1 ? (
         <CountriesList
+          addToRefs={addToRefs}
           countriesToShow={countriesToShow}
           handleShow={handleShow}
         />

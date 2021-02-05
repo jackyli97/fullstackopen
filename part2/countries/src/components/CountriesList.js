@@ -2,17 +2,24 @@ import React from "react";
 import CountryInfo from "./CountryInfo";
 
 
-const CountriesList = ({ countriesToShow, handleShow }) => {
+const CountriesList = ({ countriesToShow, handleShow, addToRefs }) => {
   return (
     <div>
-      {countriesToShow.map((country) => {
-        return <ul key={country.callingCodes}>{country.name}
-         <button onClick={()=>handleShow(country.callingCodes)}>show</button>
-         <div id={country.callingCodes}
-         style={{display: "none"}}>
-           <CountryInfo country={country}/>
-         </div>
-         </ul>;
+      {countriesToShow.map((country, i) => {
+        return (
+          <div key={i}>
+            {country.name}
+            <button onClick={() => handleShow(i)}>
+              show
+            </button>
+            <div
+              ref={addToRefs}
+              style={{ display: "none" }}
+            >
+              <CountryInfo country={country} />
+            </div>
+          </div>
+        );
       })}
     </div>
   );
