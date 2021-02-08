@@ -7,8 +7,7 @@ import CountriesDisplay from "./CountriesDisplay";
 const App = () => {
     const [query, setQuery] = useState("");
     const [countries, setCountries] = useState([]);
-
-     const revealRefs = useRef([]);
+    const revealRefs = useRef([]);
     //  revealRefs.current = [];
 
     useEffect(()=>{
@@ -17,6 +16,12 @@ const App = () => {
             setCountries(response.data);
         })
     },[]);
+
+    // useEffect(() => {
+    //   axios.get(`http://api.weatherstack.com/current?access_key=0e00349739ad00b46010fa48a2da4c92&query=New York`).then((response) => {
+    //     setCountries(response.data);
+    //   });
+    // }, []);
 
     const handleQuery = (event) => {
       setQuery(event.target.value);
@@ -37,7 +42,6 @@ const App = () => {
     }
 
     const countriesToShow = query.length === 0 ? [] : countries.filter(country=>country.name.toLowerCase().includes(query));
-
 
     return (
       <div>
