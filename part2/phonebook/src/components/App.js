@@ -3,6 +3,7 @@ import axios from "axios";
 import Search from './Search';
 import PersonForm from './PersonForm';
 import PersonInfo from "./PersonInfo";
+import Notification from "./Notification";
 
 
 const App = () => {
@@ -10,6 +11,8 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   useEffect(()=>{
     axios.get("http://localhost:3001/persons")
@@ -25,7 +28,14 @@ const App = () => {
         setPersons(persons.filter(person=>person.id !== id));
       })
       .catch(error=>{
-        alert("This number does not exist");
+          setMessage(
+            `Information of ${name} has already been removed from server`
+          );
+          setMessageType("error");
+          setTimeout(() => {
+            setMessage(null);
+            setMessageType(null);
+          }, 5000);
       })
     }
   }
@@ -57,12 +67,25 @@ const App = () => {
         // const newPerson = [
         //   { name: newName, number: newNumber, id: persons.length + 1 },
         // ];
+        setMessage(
+        `Added ${newName} `
+        );
+        setMessageType('success');
+        setTimeout(() => {
+          setMessage(null);
+          setMessageType(null);
+        }, 5000);
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
       }))
       .catch(error=>{
-        alert(error)
+        setMessage('Problem adding new person, please try again');
+        setMessageType('error');
+        setTimeout(() => {
+        setMessage(null);
+        setMessageType(null);
+        }, 5000);
       })
     }
   };
@@ -75,6 +98,15 @@ const App = () => {
     const request = axios.put(url, changedPerson);
     request.then(response=>response.data)
     .then((returnedPerson) => {
+      setMessage(`Updated ${newName}'s number`);
+      setMessageType("success");
+      setTimeout(() => {
+        setMessage(null);
+        setMessageType(null);
+      }, 5000);
+      setPersons(persons.concat(returnedPerson));
+      setNewName("");
+      setNewNumber("");
       setPersons(
         persons.map(per=> per.id !== person.id ? per : returnedPerson)
       );
@@ -82,7 +114,12 @@ const App = () => {
       setNewNumber("");
     })
     .catch((error) => {
-      alert(error);
+        setMessage(`Information of ${newName} has already been removed from server`);
+        setMessageType("error");
+        setTimeout(() => {
+          setMessage(null);
+          setMessageType(null);
+        }, 5000);
     });
   }
 
@@ -93,6 +130,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} type={messageType}/>
       <Search handleChange={handleChange} newSearch={newSearch}/>
       <PersonForm handleChange={handleChange} handleNewPerson={handleNewPerson} newName={newName} newNumber={newNumber}/>
       {/* <form onSubmit={handleNewPerson}>
