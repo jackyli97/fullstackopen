@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Search from './Search';
 import PersonForm from './PersonForm';
-import Persons from './Persons';
 import PersonInfo from "./PersonInfo";
 
 
@@ -12,12 +11,24 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
 
-useEffect(()=>{
-  axios.get("http://localhost:3001/persons")
-  .then(response=>{
-    setPersons(response.data);
-  });
-},[]);
+  useEffect(()=>{
+    axios.get("http://localhost:3001/persons")
+    .then(response=>{
+      setPersons(response.data);
+    });
+  },[]);
+
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Delete ${name}`)) {
+      axios.delete(`http://localhost:3001/persons/${id}`)
+      .then(()=>{
+        setPersons(persons.filter(person=>person.id !== id));
+      })
+      .catch(error=>{
+        alert("This number does not exist");
+      })
+    }
+  }
 
   const handleChange = (type) => {
     return event => {
@@ -62,7 +73,7 @@ useEffect(()=>{
         </div>
       </form> */}
       <h2>Numbers</h2>
-      <PersonInfo numbersToShow={numbersToShow}/>
+      <PersonInfo numbersToShow={numbersToShow} handleDelete={handleDelete}/>
       {/* {numbersToShow.map((person) => {
         return (
           <>

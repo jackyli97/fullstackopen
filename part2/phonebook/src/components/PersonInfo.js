@@ -6,7 +6,7 @@ const PersonInfo = (props) => {
         {props.numbersToShow.map((person) => {
           return (
             <li>
-            {person.name} {person.number}
+            {person.name} {person.number} <button onClick={()=>props.handleDelete(person.id, person.name)}>delete</button>
             </li>
           );
         })}
