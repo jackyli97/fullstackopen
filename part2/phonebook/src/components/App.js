@@ -42,13 +42,48 @@ const App = () => {
 
   const handleNewPerson = (event) => {
     event.preventDefault();
-    if (checkExists(newName))window.alert(`${newName} is already added to phonebook`);
-    else{
-      const newPerson = [{name: newName, number: newNumber, id: persons.length+1}];
-      setPersons(persons.concat(newPerson));
-      setNewName('');
-      setNewNumber('');
+
+    if (checkExists(newName)){
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        handleNumberUpdate();
+      };
     }
+    else{
+      const request = axios.post("http://localhost:3001/persons",{
+        name: newName, number: newNumber, id: persons.length+1
+      });
+      request.then(response=>response.data)
+      .then((returnedPerson=>{
+        // const newPerson = [
+        //   { name: newName, number: newNumber, id: persons.length + 1 },
+        // ];
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+      }))
+      .catch(error=>{
+        alert(error)
+      })
+    }
+  };
+
+  const handleNumberUpdate = () => {
+    const person = persons.find((per) => per.name === newName);
+    const url = `http://localhost:3001/persons/${person.id}`;
+    const changedPerson = {...person, number: newNumber};
+
+    const request = axios.put(url, changedPerson);
+    request.then(response=>response.data)
+    .then((returnedPerson) => {
+      setPersons(
+        persons.map(per=> per.id !== person.id ? per : returnedPerson)
+      );
+      setNewName("");
+      setNewNumber("");
+    })
+    .catch((error) => {
+      alert(error);
+    });
   }
 
   const checkExists = (name) => {
