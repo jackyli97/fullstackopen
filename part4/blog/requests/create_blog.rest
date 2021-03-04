@@ -2,8 +2,8 @@ POST http://localhost:3001/api/blogs
 content-type: application/json
 
 {
-    "title": "Use React Hooks",
-    "author": "Front Ed",
-    "url": "reddit.com/dev",
-    "likes": 3242
+    "title": "Machine Learning",
+    "author": "Scale AI",
+    "url": "reddit.com/ML",
+    "likes": 3242232
 }
